@@ -1,11 +1,17 @@
 // Dryade.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
-
+#pragma once
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include "Grid.h"
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::ifstream grid_stream("grid.txt");
+    Grid *grid = Grid::parse(grid_stream);
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
