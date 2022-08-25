@@ -1,9 +1,12 @@
 #include "Grid.h"
+
 Grid* Grid::singleton_ = nullptr;	
 const std::vector<HexCoord> Grid::cubeDirection_ = { HexCoord(0,-1),HexCoord(-1,0),HexCoord(-1,1),HexCoord(0,1),HexCoord(1,0),HexCoord(+1,-1) };
+const std::vector<HexCoord> Grid::sunDirection_ = { HexCoord(1,0),HexCoord(0,1),HexCoord(-1,1),HexCoord(-1,0),HexCoord(0,-1),HexCoord(1,-1) };
+
 const HexCoord Grid::forward_(1, 0);
 
-Grid::Grid(std::istream& file) {
+Grid::Grid(std::istream& file)  {
 	std::string line;
 	std::getline(file, line);
 	n_cells = std::stoi(line);
@@ -25,18 +28,25 @@ Grid::Grid(std::istream& file) {
 		}
 		rings.push_back(ring);
 	}
-	
-
-	for (int i = 0; i < n_cells; i++) {
-		std::cout << i << " : (" <<indexToCoord[i].getQ() << "," << indexToCoord[i].getR() << ")" << std::endl;
-	}
-
 
 	while (std::getline(file, line)) {//Get each line of input
 		std::vector<std::string> extracted = split(line, ' '); //split line by space
 		HexCoord *c = &indexToCoord[stoi(extracted[0])];
 		tiles.insert({ *c, HexTile(*c, stoi(extracted[1]), stoi(extracted[0])) });
 	}
+}
+
+const std::vector<HexCoord> Grid::computeRing(const HexCoord& center, int radius)
+{
+	std::vector<HexCoord> newRing;
+	for (auto& c : rings[radius]) {
+		HexCoord coord = c + center;
+		if (std::find(indexToCoord.begin(), indexToCoord.end(), coord) != indexToCoord.end()) {
+			newRing.push_back(c + center);
+
+		}
+	}
+	return newRing;
 }
 
 std::vector<std::string> split(std::string str, char delimiter)

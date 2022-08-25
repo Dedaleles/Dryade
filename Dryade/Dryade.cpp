@@ -6,12 +6,17 @@
 #include <sstream>
 #include <string>
 #include "Grid.h"
-
+#include "HexCoord.h"
 
 int main()
 {
     std::ifstream grid_stream("grid.txt");
     Grid *grid = Grid::parse(grid_stream);
+
+    std::cout << grid->computeRing(grid->getCoord(19), 1);
+    grid = Grid::getInstance();
+    std::cout << &grid->getCoord(0) << std::endl;
+    std::cout << &grid->getTile(0).getCoord();
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
