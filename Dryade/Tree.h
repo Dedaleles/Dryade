@@ -11,36 +11,37 @@ private:
 	int size;
 	bool dormant;
 	HexTile& tile;
-	Player& player;
+	Player* player=nullptr;
 public:
 	friend std::ostream& operator<< (std::ostream& os, const Tree& t);
 
-	Tree(Player& p, HexTile& t,int s=0,bool isD=false):player(p),tile(t),size(s),dormant(isD){
-		player.addTreesOfSize(0);
+	Tree(Player* p, HexTile& t,int s=0,bool isD=false):player(p),tile(t),size(s),dormant(isD){
+		player->addTreesOfSize(0);
 	}
-	Tree() :player(Player::nullPlayer), tile(Grid::getInstance()->getTile(0)), size(-1), dormant(true){};
+	Tree() :player(nullptr), tile(Grid::getInstance()->getTile(0)), size(-1), dormant(true){};
 	
 	HexCoord& getCoord()  { return tile.getCoord(); };
 	HexTile& getTile()  { return tile; };
 
 	int getSize() const { return size; };
 	int getSuns() const { return size; };
-	const Player& getPlayer() const { return player; };
+	void addSuns() { player->addSuns(size); };
+	const Player& getPlayer() const { return *player; };
 
 	bool isDormant() const { return dormant; };
 
 	void grow() {
 		if (size < 3) {
-			player.removeTreesOfSize(size);
+			player->removeTreesOfSize(size);
 			size++;
-			player.addTreesOfSize(size);
+			player->addTreesOfSize(size);
 			dormant = true;
 		}
 	}
 	void complete(int nutrients) {
 		if (size == 3) {
-			player.removeTreesOfSize(size);
-			player.addScore(bonusScore() + nutrients);
+			player->removeTreesOfSize(size);
+			player->addScore(bonusScore() + nutrients);
 		}
 	}
 
@@ -59,6 +60,6 @@ public:
 };
 
 inline std::ostream& operator<< (std::ostream& os, const Tree& t) {
-	os << t.player.getName() << "'s tree on tile : " << t.tile.getIndex() << ", size = " << t.size << ", dormant = " << t.dormant;
+	os << t.player->getName() << "'s tree on tile : " << t.tile.getIndex() << ", size = " << t.size << ", dormant = " << t.dormant;
 	return os;
 }

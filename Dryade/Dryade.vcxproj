@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Action.cpp" />
     <ClCompile Include="Dryade.cpp" />
     <ClCompile Include="Forest.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -148,8 +149,10 @@
     <ClCompile Include="HexTile.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Action.h" />
     <ClInclude Include="Forest.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Grid.h" />
@@ -157,6 +160,7 @@
     <ClInclude Include="HexTile.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="grid.txt" />

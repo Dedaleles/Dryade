@@ -7,7 +7,7 @@
 #include <sstream>
 #include <algorithm>
 #include "HexTile.h"
-
+#include "utils.h"
 
 class Grid
 {
@@ -39,11 +39,19 @@ public:
 	HexCoord& getCoord(int index)  { return indexToCoord[index]; };
 	HexTile& getTile(int index)  { return tiles[indexToCoord[index]]; };
 	HexTile& getTile(const HexCoord& coord)  { return tiles[coord]; };
+	int getIndex(HexCoord& c) {
+		auto it = std::find(indexToCoord.begin(), indexToCoord.end(), c);
 
+		if (it == indexToCoord.end()){
+			return -1;
+		}
+		else {
+			return it - indexToCoord.begin();
+		}
+	}
 	const std::vector<HexCoord> getRing(int size) { return rings[size]; }
 	const std::vector<HexCoord> computeRing(const HexCoord& center, int radius);
 
 };
 
 
-std::vector<std::string> split(std::string str, char delimiter=' ');

@@ -16,7 +16,7 @@ protected:
 		c = &g->getCoord(12);
 		t= new HexTile(*c, 3, 12);
 		p = new Player("charles");
-		treeTest = new Tree(*p,*t);
+		treeTest = new Tree(p,*t);
 	}
 
 	Grid* g;
@@ -32,7 +32,7 @@ protected:
 };
 
 TEST_F(TreeTest, TreeCreation) {
-	Tree t2(*p,*t, 2, true);
+	Tree t2(p,*t, 2, true);
 	EXPECT_EQ(t2.getCoord(), *c);
 	EXPECT_EQ(t2.getSize(), 2);
 	EXPECT_EQ(t2.isDormant(), true);
@@ -86,4 +86,10 @@ TEST_F(TreeTest, ProjectShadow) {
 	treeTest->grow();
 	std::set<HexCoord> cmp = { g->getCoord(3), g->getCoord(2) };
 	EXPECT_EQ(cmp, treeTest->projectShadow(0));
+}
+
+TEST_F(TreeTest, AddSuns) {
+	treeTest->grow();
+	treeTest->addSuns();
+	EXPECT_EQ(p->getSuns(),1);
 }

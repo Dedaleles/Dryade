@@ -15,7 +15,7 @@ protected:
 		std::ifstream grid_stream("../../Dryade/grid.txt");
 		g = Grid::parse(grid_stream);
 		p = new Player("charles");
-		f.plantTree(g->getCoord(0), *p);
+		f.plantTree(g->getCoord(0), p);
 	}
 
 	Forest f;
@@ -28,7 +28,7 @@ protected:
 };
 
 TEST_F(ForestTest, PlantTree) {
-	f.plantTree(g->getCoord(1), *p);
+	f.plantTree(g->getCoord(1), p);
 	EXPECT_EQ(f[g->getCoord(1)].getSize(), 0);
 }
 
@@ -64,4 +64,42 @@ TEST_F(ForestTest, ComputeShadows) {
 		std::set<HexCoord>()
 	};
 	std::vector<std::set<HexCoord>>s = f.computeShadows(0);
+	EXPECT_EQ(res, s);
+
+}
+
+TEST_F(ForestTest, computeSuns1) {
+	f.plantTree(HexCoord(1,0), p);
+	f.plantTree(HexCoord(2,0), p);
+	f.growTree(HexCoord(1, 0));
+
+	f.growTree(HexCoord(2, 0));
+	f.growTree(HexCoord(2, 0));
+	f.growTree(HexCoord(2, 0));
+
+	f.growTree(g->getCoord(0));
+	f.growTree(g->getCoord(0));
+	
+	f.computeSuns(0);
+
+	EXPECT_EQ(p->getSuns(), 5);
+}
+
+TEST_F(ForestTest, computeSuns2) {
+	f.plantTree(HexCoord(1, 0), p);
+	f.plantTree(HexCoord(2, 0), p);
+	f.growTree(HexCoord(1, 0));
+	f.growTree(HexCoord(1, 0));
+	f.growTree(HexCoord(1, 0));
+
+	f.growTree(HexCoord(2, 0));
+	f.growTree(HexCoord(2, 0));
+	f.growTree(HexCoord(2, 0));
+
+	f.growTree(g->getCoord(0));
+	f.growTree(g->getCoord(0));
+
+	f.computeSuns(0);
+
+	EXPECT_EQ(p->getSuns(), 5);
 }

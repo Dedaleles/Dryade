@@ -16,7 +16,23 @@ public:
 
 	bool isGameOver() { return day == 24; };
 	Player& getWinner() {
+		if (p1.getScore() > p2.getScore()) {
+			return p1;
+		}
+		else {
+			return p2;
+		}
+	}
 
+	int getRewardFor( const Player& p) {
+		Player& opp = p == p1 ? p2 : p1;
+		if (p.getScore() > opp.getScore()) {
+			return 1;
+		}
+		else if (opp.getScore() > p.getScore()) {
+			return -1;
+		}
+		return 0;
 	}
 };
 

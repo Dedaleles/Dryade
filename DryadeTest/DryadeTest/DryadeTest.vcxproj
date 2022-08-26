@@ -36,6 +36,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActionTest.cpp" />
     <ClCompile Include="ForestTest.cpp" />
     <ClCompile Include="GridTest.cpp" />
     <ClCompile Include="HexCoordTest.cpp" />
@@ -90,7 +91,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>C:\Users\Brico\code\ARES\Dryade\Dryade\x64\Debug\grid.obj;C:\Users\Brico\code\ARES\Dryade\Dryade\x64\Debug\player.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\Brico\code\ARES\Dryade\Dryade\x64\Debug\grid.obj;C:\Users\Brico\code\ARES\Dryade\Dryade\x64\Debug\player.obj;C:\Users\Brico\code\ARES\Dryade\Dryade\x64\Debug\utils.obj;C:\Users\Brico\code\ARES\Dryade\Dryade\x64\Debug\Action.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

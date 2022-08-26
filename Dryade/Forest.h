@@ -18,10 +18,24 @@ public:
 			trees.insert({ t.first, Tree(t.second) });
 		}
 	}
-	void computeSuns() {// TODO Define compute suns
+	void computeSuns(int sun_pos) {
+		std::vector<std::set<HexCoord>> shadow = computeShadows(sun_pos);
+		std::vector<Tree> active; 
+		for (auto& t : trees) {
+			bool shadowed = false;
+			for (int i = t.second.getSize(); i < 4; i++) {
+				if (shadow[i].find(t.first) != shadow[i].end()) {
+					shadowed = true;
+				}
+			}
+
+			if (!shadowed) {
+				t.second.addSuns();
+			}
+		}
 	};
 
-	std::vector<std::set<HexCoord>> computeShadows(int sun_pos) {//TODO Define compute shadows
+	std::vector<std::set<HexCoord>> computeShadows(int sun_pos) {
 		std::vector<std::set<HexCoord>> shadows = {
 			std::set<HexCoord>({}),
 			std::set<HexCoord>({}),
@@ -39,7 +53,7 @@ public:
 		return shadows;
 	};
 
-	void plantTree(const HexCoord& coord, Player& player) {
+	void plantTree(const HexCoord& coord, Player* player) {
 		trees.insert({ coord, Tree(player, Grid::getInstance()->getTile(coord), 0, true) });
 	}
 
